@@ -53,18 +53,6 @@
 // be unnecessary, but erring on side of caution here.
 #define BYTE_TIME (((11L * 1000000L) + (BAUDRATE / 2)) / BAUDRATE)
 
-uint64_t micros() {
-    struct timeval tv;
-    gettimeofday(&tv,NULL);
-    return tv.tv_sec*(uint64_t)1000000+tv.tv_usec;
-}
-
-void delay(size_t c) {
-    usleep(c * 1000);
-}
-
-const char* F(const char* c) { return c; }
-
 // Constructor
 Adafruit_Thermal::Adafruit_Thermal(Stream *s, uint8_t dtr) :
   stream(s), dtrPin(dtr) {

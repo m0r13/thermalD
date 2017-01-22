@@ -27,13 +27,7 @@
 #define PRINTER_FIRMWARE 268
 
 //#include "Arduino.h"
-#include <cstdint>
-#include <cstring>
-#include <cctype>
-#include <cstdio>
-#include <ctime>
-#include <sys/time.h>
-#include <unistd.h>
+#include "arduino_compat.h"
 
 // Barcode types and charsets
 #if PRINTER_FIRMWARE >= 264
@@ -122,29 +116,6 @@
  #define CODE11   9
  #define MSI     10
 #endif
-
-class Stream {
-public:
-    void write(uint8_t c) { putchar(c); fflush(stdout); }
-    bool available() { return false; }
-    uint8_t read() { return 0; }
-};
-
-class Print {
-public:
-    virtual size_t write(uint8_t c) {}
-
-    void println(const char* str) {
-        const char* c = str - 1;
-        while(*(++c) != '\0') {
-            write(*c);
-        }
-    }
-};
-
-uint64_t micros();
-void delay(size_t);
-const char* F(const char* c);
 
 class Adafruit_Thermal : public Print {
 
