@@ -26,7 +26,7 @@
 
 //SoftwareSerial mySerial(RX_PIN, TX_PIN); // Declare SoftwareSerial obj first
 //Adafruit_Thermal printer(&mySerial);     // Pass addr to printer constructor
-Stream s;
+Stream s(stdout, stdin);
 Adafruit_Thermal printer(&s);
 // Then see setup() function regarding serial & printer begin() calls.
 

@@ -16,11 +16,17 @@ char randchar() {
 }
 
 int main() {
-    Stream s;
+    Stream s(stdout, stdin);
     Adafruit_Thermal t(&s);
     t.begin();
     t.println("Hello World!");
     t.feed(2);
+
+    //t.printf("Hello World!\n");
+    //t.printf("%d %f\n", 42, 0.2049504);
+
+    //t.feed(2);
+    //return 0;
 
     /*
     for(int i = 0; i < 10; i++)
@@ -35,7 +41,7 @@ int main() {
 
     int i = 0;
     while(i < 28) {
-        //t.write(randchar());
+        t.write(randchar());
         char c;
         f >> c;
         if (c == '4' || c == '2') {
@@ -43,7 +49,7 @@ int main() {
         } else {
             t.boldOff();
         }
-        t.write(c);
+        //t.write(c);
         //t.write('a' + i);
         //t.write('4');
         //t.write('2');
