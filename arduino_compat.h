@@ -1,6 +1,8 @@
 #ifndef ARDUINO_COMPAT_H
 #define ARDUINO_COMPAT_H
 
+#include "serial.h"
+
 #include <cstdint>
 #include <cstring>
 #include <cctype>
@@ -18,13 +20,28 @@ const char* F(const char* c);
 class Stream {
 public:
     Stream(FILE* tx = stdout, FILE* rx = stdin) : tx(tx), rx(rx) {}
+    ~Stream() {}
 
-    void write(uint8_t c) { fputc(c, tx); fflush(tx); }
-    bool available() { return !feof(rx); }
-    uint8_t read() { return fgetc(rx); }
+    virtual void write(uint8_t c) { fputc(c, tx); /*fflush(tx);*/ }
+    virtual bool available() const { return !feof(rx); }
+    virtual uint8_t read() { return fgetc(rx); }
 
 protected:
     FILE *tx, *rx;
+};
+
+class SerialStream : public Stream {
+public:
+    SerialStream() : Stream(NULL, NULL) {}
+
+    bool open(const char* path, int baudrate) {
+        FILE* s = open_serial(path, baudrate);
+        if (s == NULL) {
+            return false;
+        }
+        tx = rx = s;
+        return true;
+    }
 };
 
 class Print {
@@ -58,7 +75,7 @@ public:
 
     void println(const char* str) {
         print(str);
-        //write('\n');
+        write('\n');
     }
 };
 

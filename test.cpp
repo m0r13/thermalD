@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <iostream>
 #include <fstream>
+#include <termios.h>
 
 char randchar() {
     char c = 0;
@@ -16,17 +17,23 @@ char randchar() {
 }
 
 int main() {
-    Stream s(stdout, stdin);
+    SerialStream s;
+    s.open("/dev/ttyUSB0", B9600);
     Adafruit_Thermal t(&s);
     t.begin();
+    t.feed(2);
     t.println("Hello World!");
     t.feed(2);
+    return 0;
 
     //t.printf("Hello World!\n");
     //t.printf("%d %f\n", 42, 0.2049504);
 
     //t.feed(2);
     //return 0;
+    
+    //t.printf("Hello World %d!", 42);
+    //t.feed(2);
 
     /*
     for(int i = 0; i < 10; i++)
@@ -40,7 +47,7 @@ int main() {
     while (1) {
 
     int i = 0;
-    while(i < 28) {
+    while(i < 32) {
         t.write(randchar());
         char c;
         f >> c;
@@ -55,7 +62,7 @@ int main() {
         //t.write('2');
         //putchar(randchar());
         //printf("\n");
-        delay(25);
+        delay(0);
         i++;
     }
     t.feed(1);
