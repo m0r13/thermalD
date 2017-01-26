@@ -17,7 +17,10 @@ int main(int argc, char** argv) {
     Adafruit_Thermal printer(&s);
     printer.begin();
     printer.feed(1);
+
+    printer.setDotPrintTime(printer.getDotPrintTime() * 0.1);
     printer.printBitmap(image_width, image_height, image_data);
+    
     printer.println("");
     printer.justify('C');
     for (std::string str; std::getline(std::cin, str); ) {

@@ -174,6 +174,11 @@ class Adafruit_Thermal : public Print {
   bool
     hasPaper();
 
+  unsigned long getDotPrintTime() const;
+  void setDotPrintTime(unsigned long p);
+  unsigned long getDotFeedTime() const;
+  void setDotFeedTime(unsigned long f);
+
  private:
 
   Stream

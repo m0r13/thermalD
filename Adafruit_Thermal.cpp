@@ -92,6 +92,22 @@ void Adafruit_Thermal::setTimes(unsigned long p, unsigned long f) {
   dotFeedTime  = f;
 }
 
+unsigned long Adafruit_Thermal::getDotPrintTime() const {
+  return dotPrintTime;
+}
+
+void Adafruit_Thermal::setDotPrintTime(unsigned long p) {
+  dotPrintTime = p;
+}
+
+unsigned long Adafruit_Thermal::getDotFeedTime() const {
+  return dotFeedTime;
+}
+
+void Adafruit_Thermal::setDotFeedTime(unsigned long f) {
+  dotFeedTime = f;
+}
+
 // The next four helper methods are used when issuing configuration
 // commands, printing bitmaps or barcodes, etc.  Not when printing text.
 
