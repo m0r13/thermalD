@@ -13,6 +13,9 @@
 #include <sys/time.h>
 #include <unistd.h>
 
+#include <iostream>
+#include <string>
+
 int64_t micros();
 void delay(size_t);
 const char* F(const char* c);
@@ -75,6 +78,49 @@ public:
 
     void println(const char* str) {
         print(str);
+        write('\n');
+    }
+
+    void printParagraph(std::string str, size_t lineLength = 32) {
+        int pos = 0;
+        while (!str.empty()) {
+            std::string word;
+            size_t nextWhitespace = str.find(' ');
+            if (nextWhitespace == std::string::npos) {
+                word = str;
+                str = "";
+            } else {
+                word = str.substr(0, nextWhitespace);
+                str = str.substr(nextWhitespace+1);
+                size_t nextCharacter = str.find_first_not_of(" ");
+                if (nextCharacter != std::string::npos) {
+                    str = str.substr(nextCharacter);
+                } else {
+                    str = "";
+                }
+            }
+
+            if (pos + word.size() < lineLength) {
+                print(word.c_str());
+                pos += word.size();
+
+                if (pos + 1 < lineLength) {
+                    write(' ');
+                    pos++;
+                } else {
+                    write('\n');
+                    pos = 0;
+                }
+            } else {
+                write('\n');
+                print(word.c_str());
+                pos = word.size();
+            }
+        }
+
+        if (pos != 0) {
+            write('\n');
+        }
         write('\n');
     }
 };
