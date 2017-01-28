@@ -42,7 +42,7 @@ public:
 
 class Print {
 public:
-    virtual size_t write(uint8_t c) {}
+    virtual size_t write(uint8_t c);
 
     void pprintf(const char* fmt, va_list args);
 

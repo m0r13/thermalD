@@ -20,15 +20,17 @@ Stream::~Stream() {
 }
 
 void Stream::write(uint8_t c) {
-    fputc(c, tx);
+    if (tx != nullptr) {
+        fputc(c, tx);
+    }
 }
 
 bool Stream::available() const {
-    return !feof(rx);
+    return rx == nullptr ? false : !feof(rx);
 }
 
 uint8_t Stream::read() {
-    return fgetc(rx);
+    return rx == nullptr ? EOF : fgetc(rx);
 }
 
 SerialStream::SerialStream()
@@ -42,6 +44,10 @@ bool SerialStream::open(const char* path, int baudrate) {
     }
     tx = rx = s;
     return true;
+}
+
+size_t Print::write(uint8_t c) {
+    //std::cerr << c;
 }
 
 void Print::pprintf(const char* fmt, va_list args) {
@@ -75,6 +81,11 @@ void Print::println(const char* str) {
 }
 
 void Print::printParagraph(std::string str, size_t lineLength) {
+    if (str == "") {
+        write('\n');
+        return;
+    }
+
     int pos = 0;
     while (!str.empty()) {
         std::string word;
@@ -107,13 +118,13 @@ void Print::printParagraph(std::string str, size_t lineLength) {
         } else {
             write('\n');
             print(word.c_str());
-            pos = word.size();
+            write(' ');
+            pos = word.size() + 1;
         }
     }
 
     if (pos != 0) {
         write('\n');
     }
-    write('\n');
 }
 

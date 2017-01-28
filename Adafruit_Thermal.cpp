@@ -144,7 +144,7 @@ void Adafruit_Thermal::writeBytes(uint8_t a, uint8_t b, uint8_t c, uint8_t d) {
 // The underlying method for all high-level printing (e.g. println()).
 // The inherited Print class handles the rest!
 size_t Adafruit_Thermal::write(uint8_t c) {
-
+  Print::write(c);
   if(c != 0x13) { // Strip carriage returns
     timeoutWait();
     stream->write(c);
