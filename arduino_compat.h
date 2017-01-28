@@ -16,7 +16,7 @@
 #include <iostream>
 #include <string>
 
-int64_t micros();
+unsigned long micros();
 void delay(size_t);
 const char* F(const char* c);
 

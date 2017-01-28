@@ -70,7 +70,7 @@ void Adafruit_Thermal::timeoutWait() {
     //while(digitalRead(dtrPin) == HIGH);
   } else {
     while (1) {
-        if ((long)(micros() - resumeTime) >= 0L)
+        if ((unsigned long)(micros() - resumeTime) >= 0L)
             break;
     }
   }
