@@ -1,4 +1,4 @@
-LIB_OBJ=serial.o arduino_compat.o Adafruit_Thermal.o
+LIB_OBJ=serial.o arduino_compat.o image.o Adafruit_Thermal.o
 APP_OBJ=printtext.o printimage.o test.o A_printertest.o
 OBJ=$(LIB_OBJ) $(APP_OBJ)
 
@@ -21,6 +21,7 @@ A_printertest: A_printertest.o $(LIB_OBJ)
 
 serial.o: serial.h
 arduino_compat.o: arduino_compat.h
+image.o: image.h
 Adafruit_Thermal.o: Adafruit_Thermal.h
 printtext.o:  Adafruit_Thermal.h
 printimage.o:  Adafruit_Thermal.h image_data.h

@@ -28,6 +28,7 @@
 
 //#include "Arduino.h"
 #include "arduino_compat.h"
+#include "image.h"
 
 // Barcode types and charsets
 #if PRINTER_FIRMWARE >= 264
@@ -146,6 +147,7 @@ class Adafruit_Thermal : public Print {
     printBitmap(int w, int h, const uint8_t *bitmap, bool fromProgMem=true),
     printBitmap(int w, int h, Stream *fromStream),
     printBitmap(Stream *fromStream),
+    printImage(ImageStream& image),
     normal(),
     reset(),
     setBarcodeHeight(uint8_t val=50),

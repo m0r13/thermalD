@@ -5,8 +5,8 @@ import sys
 
 if __name__ == "__main__":
     img = Image.open(sys.argv[1])
-    if img.size[0] > img.size[1]:
-        img = img.transpose(Image.ROTATE_90)
+    #if img.size[0] > img.size[1]:
+    #    img = img.transpose(Image.ROTATE_90)
     target_width = 384
     factor = float(target_width) / img.size[0]
     img = img.resize((target_width, int(factor * img.size[1])))
@@ -17,8 +17,8 @@ if __name__ == "__main__":
     #byte_height = img.size[1]
     #print(byte_width, byte_height)
 
-    print("#ifndef image_h")
-    print("#define image_h")
+    print("#ifndef image_data_h")
+    print("#define image_data_h")
     print("#define image_width %d" % img.size[0])
     print("#define image_height %d" % img.size[1])
     print("static const uint8_t image_data[] = {")

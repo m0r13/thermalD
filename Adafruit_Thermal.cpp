@@ -543,6 +543,44 @@ void Adafruit_Thermal::printBitmap(Stream *fromStream) {
   printBitmap(width, height, fromStream);
 }
 
+void Adafruit_Thermal::printImage(ImageStream& image) {
+    size_t rowWidth = image.getWidth();
+    size_t rowByteWidth = (rowWidth + 7) / 8;
+
+    size_t rowBufferHeight = 5;
+    std::vector<uint8_t> rowBuffer;
+    while(1) {
+        rowBuffer.clear();
+        rowBuffer.resize(rowByteWidth * rowBufferHeight, 0);
+        size_t i = 0;
+        for (; i < rowBufferHeight; i++) {
+            std::vector<bool> buffer(rowWidth, 0);
+            if (!image.readLine(buffer)) {
+                break;
+            }
+            for (size_t j = 0; j < rowWidth; j++) {
+                size_t bytePos = j % 8;
+                if (buffer[j]) {
+                    rowBuffer[i * rowByteWidth + j / 8] |= (1 << bytePos);
+                }
+            }
+        }
+        size_t rowsRead = i;
+        if (rowsRead == 0) {
+            break;
+        }
+        timeoutWait();
+        writeBytes(ASCII_DC2, '*', rowsRead, rowByteWidth);
+        for (size_t j = 0; j < rowsRead * rowByteWidth; j++) {
+            stream->write(rowBuffer[j]);
+        }
+        timeoutSet(rowsRead * dotPrintTime);
+        if (rowsRead != rowBufferHeight) {
+            break;
+        }
+    }
+}
+
 // Take the printer offline. Print commands sent after this will be
 // ignored until 'online' is called.
 void Adafruit_Thermal::offline(){
