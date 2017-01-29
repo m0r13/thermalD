@@ -20,7 +20,7 @@ int main(int argc, char** argv) {
     }
     Adafruit_Thermal printer(&s);
     printer.begin();
-    printer.setDefaults();
+    printer.setDefault();
     printer.feed(1);
 
     printer.setDotPrintTime(printer.getDotPrintTime() * 0.1);
