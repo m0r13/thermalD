@@ -11,11 +11,16 @@ int main(int argc, char** argv) {
     }
 
     SerialStream s;
-    s.open(argv[1], B9600);
+    if (!s.open(argv[1], B9600)) {
+        std::cerr << "Unable to open " << argv[1] << ": " << strerror(errno) << std::endl;
+        return 1;
+    }
     Adafruit_Thermal printer(&s);
+    printer.begin();
+    printer.setDefault();
 
     for (std::string line; std::getline(std::cin, line); ) {
-        printer.println(line.c_str());
+        printer.printParagraph(line.c_str());
     }
     return 0;
 }
