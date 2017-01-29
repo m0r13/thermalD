@@ -23,6 +23,6 @@ serial.o: serial.h
 arduino_compat.o: arduino_compat.h
 Adafruit_Thermal.o: Adafruit_Thermal.h
 printtext.o:  Adafruit_Thermal.h
-printimage.o:  Adafruit_Thermal.h image.h
+printimage.o:  Adafruit_Thermal.h image_data.h
 test.o: Adafruit_Thermal.h
 A_printertest.o: Adafruit_Thermal.h
